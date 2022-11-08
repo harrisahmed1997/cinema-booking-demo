@@ -83,14 +83,49 @@
                                                 <label class="custom-file-label" for="customFile">Choose file</label>
                                             </div>
                                     </div> -->
+                                        <div class="col-12 col-md-12 col-lg-12">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h4>Movie Details</h4>
+                                                </div>
+                                                <div class="card-body p-0">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-md">
 
+                                                            <tr>
+                                                                <th>#</th>
+                                                                <th>Movie Name</th>
+                                                                <th>Movie Category</th>
+                                                                </th>
+                                                                <th>Movie Status</th>
+                                                            </tr>
 
+                                                            <?php
+                                                            $moviedetails = "SELECT * from nueplex.movies";
+                                                            $result = mysqli_query($connection, $moviedetails);
+                                                            $i = 1;
+                                                            if (mysqli_num_rows($result) > 0) {
+                                                                while ($rows = mysqli_fetch_assoc($result)) { ?>
+                                                                    <tr>
+                                                                        <td><?php echo $i++; ?></td>
+                                                                        <td class="moviename"><?php echo $rows['movieName'] ?></td>
+                                                                        <td class="movieCat"><?php echo $rows['movieCat']; ?></td>
+                                                                        <td>
+                                                                            <div class="mvstatus badge badge-<?php echo ($rows['movieStatus'] == "Showing") ? 'success' : 'warning'; ?>"><?php echo $rows['movieStatus']; ?></div>
+                                                                        </td>
+                                                                        <td> <button type="button" class="btn btn-primary editbtn" data-toggle="modal" data-target="#exampleModalCenter" id='<?php echo $rows['movieId'] ?>'>Edit</button></td>
 
-                                        <div class="card-footer text-right">
-                                            <button class="btn btn-primary mr-1 submitbtn" type="submit" name="addbtn">Submit</button>
-                                            <button class="btn btn-secondary" type="reset">Reset</button>
+                                                                    </tr>
+                                                            <?php  }
+                                                            }
+                                                            ?>
+
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        </form>
+
                                     </div>
 
                                 </div>
@@ -98,6 +133,63 @@
                         </div>
 
                     </div>
+            </div>
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalCenterTitle">Edit Movie Info</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="movie-form">
+                                <div class="card">
+                                    <div class="card-header">
+
+
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="edit-form">
+                                            <div class="form-group">
+                                                <label>Movie Name</label>
+                                                <input type="text" class="form-control movienameinput" name="moviename">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Category</label>
+                                                <select class="form-control moviecatinput" name="moviecat">
+                                                    <option>Action/Adventure</option>
+                                                    <option>SciFi</option>
+                                                    <option>Horror</option>
+                                                    <option>Comedy</option>
+                                                    <option>Kids</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Status</label>
+                                                <select class="form-control moviestatusinput" name="status">
+                                                    <option>Showing</option>
+                                                    <option>Upcoming</option>
+                                                    <option>Removed</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer text-right">
+                                            <button class="btn btn-primary mr-1 submitbtn" type="submit" name="addbtn">Submit</button>
+                                            <button class="btn btn-secondary" type="reset">Reset</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="modal-footer bg-whitesmoke br">
+                            <button type="button" class="btn btn-primary">Save</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
             </div>
             </section>
             <div class="settingSidebar">
@@ -208,8 +300,22 @@
     <!-- Custom JS File -->
     <script src="assets/js/custom.js"></script>
 
-    <script>
 
+    <script>
+        $(document).ready(function() {
+            $('.editbtn').click(function() {
+                id = $(this).attr('id')
+
+                moviename = ($(this).closest("tr").find('.moviename').text())
+                moviecat = ($(this).closest("tr").find('.movieCat').text())
+                mvstatus = ($(this).closest("tr").find('.mvstatus').text())
+
+                $('.movienameinput').val(moviename);
+                $('.moviecatinput').val(moviecat);
+                $('.moviestatusinput').val(mvstatus);
+
+            })
+        })
     </script>
 </body>
 

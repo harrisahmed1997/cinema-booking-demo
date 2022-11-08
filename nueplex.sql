@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 07, 2022 at 10:26 AM
+-- Generation Time: Nov 08, 2022 at 10:13 AM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 7.3.27
 
@@ -56,21 +56,24 @@ CREATE TABLE `movies` (
   `movieRuntime` bigint(20) DEFAULT NULL,
   `movieImage` varchar(255) DEFAULT NULL,
   `movieDescription` longtext DEFAULT NULL,
-  `movieStatus` varchar(100) DEFAULT NULL
+  `movieStatus` varchar(100) DEFAULT NULL,
+  `movieRating` int(11) DEFAULT NULL,
+  `movieTrailer` longtext DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `movies`
 --
 
-INSERT INTO `movies` (`movieId`, `movieName`, `movieCat`, `movieRuntime`, `movieImage`, `movieDescription`, `movieStatus`) VALUES
-(3, 'Oblivion', 'Action/Adventure', 7440, '1966691347mv1.jpg', 'A court martial sends a veteran soldier to a distant planet, where he has to ... Everything New on Hulu in November. There&#39;s a whole lot to love about Hulu&#39;s ', 'Showing'),
-(4, 'Black Adam', 'Action/Adventure', 7440, '868194380blackadam.jpg', 'Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lipsum generator.', 'Showing'),
-(5, 'The Dark Knight', 'Action/Adventure', 9120, '2142151293darknight.jpg', 'Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lipsum generator.', 'Showing'),
-(6, 'Man Of Steel', 'Action/Adventure', 9120, '333395070mos.jpg', 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis quos tempore voluptatibus.', 'Showing'),
-(7, 'Avengers Endgame', 'Action/Adventure', 10800, '585074086avenger.jpg', 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis quos tempore voluptatibus.', 'Showing'),
-(8, 'Interstellar', 'SciFi', 10800, '1778344385interstellar.jpg', 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis quos tempore voluptatibus.', 'Showing'),
-(9, 'John Wick 2', 'Action/Adventure', 7200, '1021955603john wick.jpg', 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis quos tempore voluptatibus.', 'Showing');
+INSERT INTO `movies` (`movieId`, `movieName`, `movieCat`, `movieRuntime`, `movieImage`, `movieDescription`, `movieStatus`, `movieRating`, `movieTrailer`) VALUES
+(3, 'Oblivion', 'Action/Adventure', 7440, '1966691347mv1.jpg', 'A court martial sends a veteran soldier to a distant planet, where he has to ... Everything New on Hulu in November. There&#39;s a whole lot to love about Hulu&#39;s ', 'Showing', NULL, 'https://www.youtube.com/embed/XmIIgE7eSak'),
+(4, 'Black Adam', 'Action/Adventure', 7440, '868194380blackadam.jpg', 'Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lipsum generator.', 'Showing', NULL, 'https://www.youtube.com/embed/EXeTwQWrcwY'),
+(5, 'The Dark Knight', 'Action/Adventure', 9120, '2142151293darknight.jpg', 'Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lipsum generator.', 'Showing', NULL, 'https://www.youtube.com/watch?v=TQfATDZY5Y4'),
+(6, 'Man Of Steel', 'Action/Adventure', 9120, '333395070mos.jpg', 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis quos tempore voluptatibus.', 'Showing', NULL, 'https://www.youtube.com/watch?v=T6DJcgm3wNY'),
+(7, 'Avengers Endgame', 'Action/Adventure', 10800, '585074086avenger.jpg', 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis quos tempore voluptatibus.', 'Showing', NULL, 'https://www.youtube.com/watch?v=TcMBFSGVi1c'),
+(8, 'Interstellar', 'SciFi', 10800, '1778344385interstellar.jpg', 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis quos tempore voluptatibus.', 'Showing', NULL, 'https://www.youtube.com/watch?v=zSWdZVtXT7E'),
+(9, 'John Wick 2', 'Action/Adventure', 7200, '1021955603john wick.jpg', 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis quos tempore voluptatibus.', 'Showing', NULL, 'https://www.youtube.com/watch?v=XGk2EfbD_Ps'),
+(10, 'Black Panther: Wakanda Forever', 'Action/Adventure', 7200, '1228562629wakandaforever.jpg', 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis quos tempore voluptatibus.', 'Upcoming', NULL, 'https://www.youtube.com/embed/_Z3QKkl1WyM');
 
 -- --------------------------------------------------------
 
@@ -194,7 +197,7 @@ ALTER TABLE `cinemas`
 -- AUTO_INCREMENT for table `movies`
 --
 ALTER TABLE `movies`
-  MODIFY `movieId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `movieId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `orders`

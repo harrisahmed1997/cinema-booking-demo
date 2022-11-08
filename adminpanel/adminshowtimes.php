@@ -98,6 +98,7 @@
                                                                 <th>Movie Category</th>
                                                                 </th>
                                                                 <th>Movie Status</th>
+                                                                <th>Movie Trailer</th>
                                                             </tr>
 
                                                             <?php
@@ -113,6 +114,7 @@
                                                                         <td>
                                                                             <div class="mvstatus badge badge-<?php echo ($rows['movieStatus'] == "Showing") ? 'success' : 'warning'; ?>"><?php echo $rows['movieStatus']; ?></div>
                                                                         </td>
+                                                                        <td class="movietrailer" style="width:20% !important; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;"> <?php echo $rows['movieTrailer']; ?> </td>
                                                                         <td> <button type="button" class="btn btn-primary editbtn" data-toggle="modal" data-target="#exampleModalCenter" id='<?php echo $rows['movieId'] ?>'>Edit</button></td>
 
                                                                     </tr>
@@ -157,6 +159,10 @@
                                                 <input type="text" class="form-control movienameinput" name="moviename">
                                             </div>
                                             <div class="form-group">
+                                                <label>Movie Trailer</label>
+                                                <input type="text" class="form-control movietrailerinput" name="moviename">
+                                            </div>
+                                            <div class="form-group">
                                                 <label>Category</label>
                                                 <select class="form-control moviecatinput" name="moviecat">
                                                     <option>Action/Adventure</option>
@@ -175,17 +181,14 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="card-footer text-right">
-                                            <button class="btn btn-primary mr-1 submitbtn" type="submit" name="addbtn">Submit</button>
-                                            <button class="btn btn-secondary" type="reset">Reset</button>
-                                        </div>
+
                                     </div>
                                 </div>
 
                             </div>
                         </div>
                         <div class="modal-footer bg-whitesmoke br">
-                            <button type="button" class="btn btn-primary">Save</button>
+                            <button type="button" class="btn btn-primary modal-save">Save</button>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         </div>
                     </div>
@@ -300,20 +303,54 @@
     <!-- Custom JS File -->
     <script src="assets/js/custom.js"></script>
 
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
     <script>
         $(document).ready(function() {
+
+            id = 0;
             $('.editbtn').click(function() {
                 id = $(this).attr('id')
 
-                moviename = ($(this).closest("tr").find('.moviename').text())
-                moviecat = ($(this).closest("tr").find('.movieCat').text())
-                mvstatus = ($(this).closest("tr").find('.mvstatus').text())
+                const moviename = ($(this).closest("tr").find('.moviename').text())
+                const moviecat = ($(this).closest("tr").find('.movieCat').text())
+                const mvstatus = ($(this).closest("tr").find('.mvstatus').text())
+                const mvtrailer = ($(this).closest("tr").find('.movietrailer').text())
 
                 $('.movienameinput').val(moviename);
                 $('.moviecatinput').val(moviecat);
                 $('.moviestatusinput').val(mvstatus);
+                $('.movietrailerinput').val(mvtrailer);
 
+
+            })
+
+            $('.modal-save').click(function() {
+
+                $.ajax({
+                    url: 'updatemovie.php',
+                    type: "POST",
+                    data: {
+                        id: id,
+                        moviename: $('.movienameinput').val(),
+                        moviecat: $('.moviecatinput').val(),
+                        mvstatus: $('.moviestatusinput').val(),
+                        mvtrailer: $('.movietrailerinput').val()
+                    },
+
+                    success: function(result) {
+
+                        console.log(result);
+
+                        Swal.fire(
+                            'Good job!',
+                            'Your item has been updated!',
+                            'success'
+                        )
+
+                    }
+                })
             })
         })
     </script>

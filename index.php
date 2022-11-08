@@ -182,7 +182,7 @@ if (isset($_POST['loginbtn'])) {
 										<span class="blue"><a href="#"><?php echo $data['movieCat']; ?></a></span>
 									</div>
 									<h6><a href="#"><?php echo $data['movieName']; ?></a></h6>
-							
+
 								</div>
 							</div>
 					<?php	}
@@ -205,7 +205,7 @@ if (isset($_POST['loginbtn'])) {
 					</div>
 					<div class="tabs">
 						<ul class="tab-links">
-							<li class="active"><a href="#tab1">#Popular</a></li>
+							<li class="active"><a href="#tab1">#Showing</a></li>
 							<li><a href="#tab2"> #Coming soon</a></li>
 							<li><a href="#tab3"> #Top rated </a></li>
 							<li><a href="#tab4"> #Most reviewed</a></li>
@@ -214,97 +214,64 @@ if (isset($_POST['loginbtn'])) {
 							<div id="tab1" class="tab active">
 								<div class="row">
 									<div class="slick-multiItem">
-										<div class="slide-it">
-											<div class="movie-item">
-												<div class="mv-img">
-													<img src="images/uploads/mv-item1.jpg" alt="" width="185" height="284">
-												</div>
-												<div class="hvr-inner">
-													<a href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
-												</div>
-												<div class="title-in">
-													<h6><a href="#">Interstellar</a></h6>
-													<p><i class="ion-android-star"></i><span>7.4</span> /10</p>
+										<?php
+										$upcoming = "SELECT * from nueplex.movies where movieStatus = 'Showing'";
+
+										$upresult = mysqli_query($connection, $upcoming);
+
+										while ($updata = mysqli_fetch_assoc($upresult)) { ?>
+											<div class="slide-it">
+												<div class="movie-item">
+													<div class="mv-img">
+														<img src="adminpanel/uploadedimgs/<?php echo $updata['movieImage']; ?>" alt="" width="185" height="284">
+													</div>
+													<div class="hvr-inner">
+														<a href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
+													</div>
+													<div class="title-in">
+														<h6><a href="#"><?php echo $updata['movieName']; ?></a></h6>
+														<p><i class="ion-android-star"></i><span><?php echo $updata['movieRating']; ?></span> /10</p>
+													</div>
 												</div>
 											</div>
-										</div>
+										<?php	}
+
+
+										?>
+
+
 									</div>
 								</div>
 							</div>
 							<div id="tab2" class="tab">
 								<div class="row">
 									<div class="slick-multiItem">
+										<?php
+										$upcoming = "SELECT * from nueplex.movies where movieStatus = 'Upcoming'";
 
-										<div class="slide-it">
-											<div class="movie-item">
-												<div class="mv-img">
-													<img src="images/uploads/mv-item5.jpg" alt="" width="185" height="284">
-												</div>
-												<div class="hvr-inner">
-													<a href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
-												</div>
-												<div class="title-in">
-													<h6><a href="#">Interstellar</a></h6>
-													<p><i class="ion-android-star"></i><span>7.4</span> /10</p>
-												</div>
-											</div>
-										</div>
-										<div class="slide-it">
-											<div class="movie-item">
-												<div class="mv-img">
-													<img src="images/uploads/mv-item6.jpg" alt="" width="185" height="284">
-												</div>
-												<div class="hvr-inner">
-													<a href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
-												</div>
-												<div class="title-in">
-													<h6><a href="#">The revenant</a></h6>
-													<p><i class="ion-android-star"></i><span>7.4</span> /10</p>
+										$upresult = mysqli_query($connection, $upcoming);
+
+										while ($updata = mysqli_fetch_assoc($upresult)) { ?>
+											<div class="slide-it">
+												<div class="movie-item">
+													<div class="mv-img">
+														<img src="adminpanel/uploadedimgs/<?php echo $updata['movieImage']; ?>" alt="" width="185" height="284">
+													</div>
+													<div class="hvr-inner">
+														<a href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
+													</div>
+													<div class="title-in">
+														<h6><a href="#"><?php echo $updata['movieName']; ?></a></h6>
+														<p><i class="ion-android-star"></i><span><?php echo $updata['movieRating']; ?></span> /10</p>
+													</div>
 												</div>
 											</div>
-										</div>
-										<div class="slide-it">
-											<div class="movie-item">
-												<div class="mv-img">
-													<img src="images/uploads/mv-item7.jpg" alt="" width="185" height="284">
-												</div>
-												<div class="hvr-inner">
-													<a href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
-												</div>
-												<div class="title-in">
-													<h6><a href="#">Die hard</a></h6>
-													<p><i class="ion-android-star"></i><span>7.4</span> /10</p>
-												</div>
-											</div>
-										</div>
-										<div class="slide-it">
-											<div class="movie-item">
-												<div class="mv-img">
-													<img src="images/uploads/mv-item8.jpg" alt="" width="185" height="284">
-												</div>
-												<div class="hvr-inner">
-													<a href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
-												</div>
-												<div class="title-in">
-													<h6><a href="#">The walk</a></h6>
-													<p><i class="ion-android-star"></i><span>7.4</span> /10</p>
-												</div>
-											</div>
-										</div>
-										<div class="slide-it">
-											<div class="movie-item">
-												<div class="mv-img">
-													<img src="images/uploads/mv-item3.jpg" alt="" width="185" height="284">
-												</div>
-												<div class="hvr-inner">
-													<a href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
-												</div>
-												<div class="title-in">
-													<h6><a href="#">Die hard</a></h6>
-													<p><i class="ion-android-star"></i><span>7.4</span> /10</p>
-												</div>
-											</div>
-										</div>
+										<?php	}
+
+
+										?>
+
+
 									</div>
 								</div>
 							</div>
@@ -462,7 +429,7 @@ if (isset($_POST['loginbtn'])) {
 							</div>
 						</div>
 					</div>
-					<div class="title-hd">
+					<!-- <div class="title-hd">
 						<h2>on tv</h2>
 						<a href="#" class="viewall">View all <i class="ion-ios-arrow-right"></i></a>
 					</div>
@@ -905,14 +872,14 @@ if (isset($_POST['loginbtn'])) {
 								</div>
 							</div>
 						</div>
-					</div>
+					</div> -->
 				</div>
 				<div class="col-md-4">
 					<div class="sidebar">
 						<div class="ads">
 							<img src="images/uploads/ads1.png" alt="" width="336" height="296">
 						</div>
-						<div class="celebrities">
+						<!-- <div class="celebrities">
 							<h4 class="sb-title">Spotlight Celebrities</h4>
 							<div class="celeb-item">
 								<a href="#"><img src="images/uploads/ava1.jpg" alt="" width="70" height="70"></a>
@@ -943,7 +910,7 @@ if (isset($_POST['loginbtn'])) {
 								</div>
 							</div>
 							<a href="#" class="btn">See all celebrities<i class="ion-ios-arrow-right"></i></a>
-						</div>
+						</div> -->
 					</div>
 				</div>
 			</div>
@@ -955,87 +922,40 @@ if (isset($_POST['loginbtn'])) {
 			<div class="row ipad-width">
 				<div class="col-md-12">
 					<div class="title-hd">
-						<h2>in theater</h2>
+						<h2>MOVIE TRAILERS</h2>
 						<a href="#" class="viewall">View all <i class="ion-ios-arrow-right"></i></a>
 					</div>
 					<div class="videos">
 						<div class="slider-for-2 video-ft">
-							<div>
-								<iframe class="item-video" src="#" data-src="https://www.youtube.com/embed/1Q8fG0TtVAY"></iframe>
-							</div>
-							<div>
-								<iframe class="item-video" src="#" data-src="https://www.youtube.com/embed/w0qQkSuWOS8"></iframe>
-							</div>
-							<div>
-								<iframe class="item-video" src="#" data-src="https://www.youtube.com/embed/44LdLqgOpjo"></iframe>
-							</div>
-							<div>
-								<iframe class="item-video" src="#" data-src="https://www.youtube.com/embed/gbug3zTm3Ws"></iframe>
-							</div>
-							<div>
-								<iframe class="item-video" src="#" data-src="https://www.youtube.com/embed/e3Nl_TCQXuw"></iframe>
-							</div>
-							<div>
-								<iframe class="item-video" src="#" data-src="https://www.youtube.com/embed/NxhEZG0k9_w"></iframe>
-							</div>
-
-
+							<?php
+							$trailer = "SELECT * from nueplex.movies";
+							$trResult = mysqli_query($connection, $trailer);
+							if (mysqli_num_rows($trResult) > 0) {
+								while ($trailers = mysqli_fetch_assoc($trResult)) { ?>
+									<div>
+										<iframe class="item-video" src="#" data-src="<?php echo $trailers['movieTrailer']; ?>"></iframe>
+									</div>
+							<?php	}
+							}
+							?>
 						</div>
 						<div class="slider-nav-2 thumb-ft">
-							<div class="item">
-								<div class="trailer-img">
-									<img src="images/uploads/trailer7.jpg" alt="photo by Barn Images" width="4096" height="2737">
-								</div>
-								<div class="trailer-infor">
-									<h4 class="desc">Wonder Woman</h4>
-									<p>2:30</p>
-								</div>
-							</div>
-							<div class="item">
-								<div class="trailer-img">
-									<img src="images/uploads/trailer2.jpg" alt="photo by Barn Images" width="350" height="200">
-								</div>
-								<div class="trailer-infor">
-									<h4 class="desc">Oblivion: Official Teaser Trailer</h4>
-									<p>2:37</p>
-								</div>
-							</div>
-							<div class="item">
-								<div class="trailer-img">
-									<img src="images/uploads/trailer6.jpg" alt="photo by Joshua Earle">
-								</div>
-								<div class="trailer-infor">
-									<h4 class="desc">Exclusive Interview: Skull Island</h4>
-									<p>2:44</p>
-								</div>
-							</div>
-							<div class="item">
-								<div class="trailer-img">
-									<img src="images/uploads/trailer3.png" alt="photo by Alexander Dimitrov" width="100" height="56">
-								</div>
-								<div class="trailer-infor">
-									<h4 class="desc">Logan: Director James Mangold Interview</h4>
-									<p>2:43</p>
-								</div>
-							</div>
-							<div class="item">
-								<div class="trailer-img">
-									<img src="images/uploads/trailer4.png" alt="photo by Wojciech Szaturski" width="100" height="56">
-								</div>
-								<div class="trailer-infor">
-									<h4 class="desc">Beauty and the Beast: Official Teaser Trailer 2</h4>
-									<p>2: 32</p>
-								</div>
-							</div>
-							<div class="item">
-								<div class="trailer-img">
-									<img src="images/uploads/trailer5.jpg" alt="photo by Wojciech Szaturski" width="360" height="189">
-								</div>
-								<div class="trailer-infor">
-									<h4 class="desc">Fast&Furious 8</h4>
-									<p>3:11</p>
-								</div>
-							</div>
+							<?php
+							$trailer = "SELECT * from nueplex.movies";
+							$trResult = mysqli_query($connection, $trailer);
+							if (mysqli_num_rows($trResult) > 0) {
+								while ($trailers = mysqli_fetch_assoc($trResult)) { ?>
+									<div class="item">
+										<div class="trailer-img">
+											<img src="adminpanel/uploadedimgs/<?php echo $trailers['movieImage']; ?>" alt="photo by Barn Images" width="4096" height="2737">
+										</div>
+										<div class="trailer-infor">
+											<h4 class="desc"><?php echo $trailers['movieName']; ?></h4>
+										</div>
+									</div>
+							<?php	}
+							}
+							?>
 
 						</div>
 					</div>

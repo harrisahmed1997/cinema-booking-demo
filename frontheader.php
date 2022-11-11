@@ -1,3 +1,31 @@
+<?php
+
+if (isset($_POST['loginbtn'])) {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    $query = "SELECT * from users where userEmail = '{$username}' AND userPw = '{$password}'";
+
+    $result = mysqli_query($connection, $query);
+
+    if (mysqli_num_rows($result) == 1) {
+        $data = mysqli_fetch_assoc($result);
+        $_SESSION['userId'] = $data['userId'];
+        $_SESSION['userRole'] = $data['userRole'];
+        $_SESSION['userEmail'] = $data['userEmail'];
+
+        success();
+    }
+}
+
+function success()
+{ ?>
+    <script>
+        window.location.replace(window.location.href);
+    </script>
+<?php }
+?>
+
 <header class="ht-header">
     <div class="container">
         <nav class="navbar navbar-default navbar-custom">

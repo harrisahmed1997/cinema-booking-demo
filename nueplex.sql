@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 08, 2022 at 10:13 AM
+-- Generation Time: Nov 12, 2022 at 10:04 AM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 7.3.27
 
@@ -66,14 +66,14 @@ CREATE TABLE `movies` (
 --
 
 INSERT INTO `movies` (`movieId`, `movieName`, `movieCat`, `movieRuntime`, `movieImage`, `movieDescription`, `movieStatus`, `movieRating`, `movieTrailer`) VALUES
-(3, 'Oblivion', 'Action/Adventure', 7440, '1966691347mv1.jpg', 'A court martial sends a veteran soldier to a distant planet, where he has to ... Everything New on Hulu in November. There&#39;s a whole lot to love about Hulu&#39;s ', 'Showing', NULL, 'https://www.youtube.com/embed/XmIIgE7eSak'),
+(3, 'Oblivion 2', 'Action/Adventure', 7440, '1966691347mv1.jpg', 'A court martial sends a veteran soldier to a distant planet, where he has to ... Everything New on Hulu in November. There&#39;s a whole lot to love about Hulu&#39;s ', 'Showing', NULL, 'https://www.youtube.com/embed/XmIIgE7eSak'),
 (4, 'Black Adam', 'Action/Adventure', 7440, '868194380blackadam.jpg', 'Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lipsum generator.', 'Showing', NULL, 'https://www.youtube.com/embed/EXeTwQWrcwY'),
-(5, 'The Dark Knight', 'Action/Adventure', 9120, '2142151293darknight.jpg', 'Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lipsum generator.', 'Showing', NULL, 'https://www.youtube.com/watch?v=TQfATDZY5Y4'),
-(6, 'Man Of Steel', 'Action/Adventure', 9120, '333395070mos.jpg', 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis quos tempore voluptatibus.', 'Showing', NULL, 'https://www.youtube.com/watch?v=T6DJcgm3wNY'),
-(7, 'Avengers Endgame', 'Action/Adventure', 10800, '585074086avenger.jpg', 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis quos tempore voluptatibus.', 'Showing', NULL, 'https://www.youtube.com/watch?v=TcMBFSGVi1c'),
-(8, 'Interstellar', 'SciFi', 10800, '1778344385interstellar.jpg', 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis quos tempore voluptatibus.', 'Showing', NULL, 'https://www.youtube.com/watch?v=zSWdZVtXT7E'),
-(9, 'John Wick 2', 'Action/Adventure', 7200, '1021955603john wick.jpg', 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis quos tempore voluptatibus.', 'Showing', NULL, 'https://www.youtube.com/watch?v=XGk2EfbD_Ps'),
-(10, 'Black Panther: Wakanda Forever', 'Action/Adventure', 7200, '1228562629wakandaforever.jpg', 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis quos tempore voluptatibus.', 'Upcoming', NULL, 'https://www.youtube.com/embed/_Z3QKkl1WyM');
+(5, 'The Dark Knight', 'Action/Adventure', 9120, '2142151293darknight.jpg', 'Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lipsum generator.', 'Showing', NULL, 'https://www.youtube.com/embed/LDG9bisJEaI'),
+(6, 'Man Of Steel', 'Action/Adventure', 9120, '333395070mos.jpg', 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis quos tempore voluptatibus.', 'Showing', NULL, 'https://www.youtube.com/embed/T6DJcgm3wNY '),
+(7, 'Avengers Endgame', 'Action/Adventure', 10800, '585074086avenger.jpg', 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis quos tempore voluptatibus.', 'Showing', NULL, 'https://www.youtube.com/embed/TcMBFSGVi1c'),
+(8, 'Interstellar', 'SciFi', 10800, '1778344385interstellar.jpg', 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis quos tempore voluptatibus.', 'Showing', 8, 'https://www.youtube.com/embed/zSWdZVtXT7E'),
+(9, 'John Wick 2', 'Action/Adventure', 7200, '1021955603john wick.jpg', 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis quos tempore voluptatibus.', 'Showing', NULL, ' https://www.youtube.com/embed/v=XGk2EfbD_Ps '),
+(10, 'Black Panther: Wakanda Forever', 'Action/Adventure', 7200, '1228562629wakandaforever.jpg', 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis quos tempore voluptatibus.', 'Upcoming', NULL, '  https://www.youtube.com/embed/_Z3QKkl1WyM  ');
 
 -- --------------------------------------------------------
 
@@ -99,6 +99,34 @@ CREATE TABLE `reservedseats` (
   `seatnumber` varchar(40) DEFAULT NULL,
   `priceEach` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reviews`
+--
+
+CREATE TABLE `reviews` (
+  `reviewId` int(11) NOT NULL,
+  `userId` int(11) DEFAULT NULL,
+  `review` longtext DEFAULT NULL,
+  `ts` timestamp NOT NULL DEFAULT current_timestamp(),
+  `dt` datetime DEFAULT current_timestamp(),
+  `movieId` int(11) DEFAULT NULL,
+  `rating` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `reviews`
+--
+
+INSERT INTO `reviews` (`reviewId`, `userId`, `review`, `ts`, `dt`, `movieId`, `rating`) VALUES
+(1, 1, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur voluptates esse debitis nostrum dignissimos? Facere ut asperiores exercitationem similique odio expedita sapiente harum aliquam architecto officia eveniet numquam delectus magnam dolores, nihil enim, ullam in recusandae possimus repellendus maiores excepturi?\r\n                                                            ', '2022-11-12 07:33:34', '2022-11-12 12:33:34', 8, 1),
+(2, 1, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur voluptates esse debitis nostrum dignissimos? Facere ut asperiores exercitationem similique odio expedita sapiente harum aliquam architecto officia eveniet numquam delectus magnam dolores, nihil enim, ullam in recusandae possimus repellendus maiores excepturi?\r\n                                                            ', '2022-11-12 07:41:21', '2022-11-12 12:41:21', 8, 10),
+(3, 1, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur voluptates esse debitis nostrum dignissimos? Facere ut asperiores exercitationem similique odio expedita sapiente harum aliquam architecto officia eveniet numquam delectus magnam dolores, nihil enim, ullam in recusandae possimus repellendus maiores excepturi?\r\n                                                            ', '2022-11-12 07:43:42', '2022-11-12 12:43:42', 8, 10),
+(4, 1, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur voluptates esse debitis nostrum dignissimos? Facere ut asperiores exercitationem similique odio expedita sapiente harum aliquam architecto officia eveniet numquam delectus magnam dolores, nihil enim, ullam in recusandae possimus repellendus maiores excepturi?\r\n                                                            ', '2022-11-12 07:45:26', '2022-11-12 12:45:26', 8, 10),
+(5, 1, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur voluptates esse debitis nostrum dignissimos? Facere ut asperiores exercitationem similique odio expedita sapiente harum aliquam architecto officia eveniet numquam delectus magnam dolores, nihil enim, ullam in recusandae possimus repellendus maiores excepturi?\r\n                                                            ', '2022-11-12 07:47:30', '2022-11-12 12:47:30', 8, 10),
+(6, 1, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur voluptates esse debitis nostrum dignissimos? Facere ut asperiores exercitationem similique odio expedita sapiente harum aliquam architecto officia eveniet numquam delectus magnam dolores, nihil enim, ullam in recusandae possimus repellendus maiores excepturi?\r\n                                                            ', '2022-11-12 07:50:25', '2022-11-12 12:50:25', 8, 5);
 
 -- --------------------------------------------------------
 
@@ -170,6 +198,14 @@ ALTER TABLE `orders`
   ADD KEY `showId` (`showId`);
 
 --
+-- Indexes for table `reviews`
+--
+ALTER TABLE `reviews`
+  ADD PRIMARY KEY (`reviewId`),
+  ADD KEY `userId` (`userId`),
+  ADD KEY `movieId` (`movieId`);
+
+--
 -- Indexes for table `showtimes`
 --
 ALTER TABLE `showtimes`
@@ -206,6 +242,12 @@ ALTER TABLE `orders`
   MODIFY `orderId` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `reviews`
+--
+ALTER TABLE `reviews`
+  MODIFY `reviewId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT for table `showtimes`
 --
 ALTER TABLE `showtimes`
@@ -227,6 +269,13 @@ ALTER TABLE `users`
 ALTER TABLE `orders`
   ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`),
   ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`showId`) REFERENCES `showtimes` (`showId`);
+
+--
+-- Constraints for table `reviews`
+--
+ALTER TABLE `reviews`
+  ADD CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`),
+  ADD CONSTRAINT `reviews_ibfk_2` FOREIGN KEY (`movieId`) REFERENCES `movies` (`movieId`);
 
 --
 -- Constraints for table `showtimes`

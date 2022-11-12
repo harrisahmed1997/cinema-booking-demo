@@ -1,6 +1,8 @@
 <?php
 include 'connection.php';
 
+
+
 if (isset($_GET['movieid'])) {
     $id = $_GET['movieid'];
 
@@ -9,10 +11,62 @@ if (isset($_GET['movieid'])) {
     $result = mysqli_query($connection, $query);
 
     $data = mysqli_fetch_assoc($result);
+
+    $totalratingsquery = "SELECT count(*) as totalrating from reviews where movieId = {$id}";
+
+    $queryresult = mysqli_query($connection, $totalratingsquery);
+
+    $totalratings = mysqli_fetch_assoc($queryresult);
+
+    $movieTotalReviews = $totalratings['totalrating'];
 }
 
+if (isset($_POST['reviewbtn'])) {
+    $review = $_POST['review'];
+    $rating = $_POST['rating'];
+    $userId = $_SESSION['userId'];
+    $query = "INSERT INTO REVIEWS (userId,review,movieId,rating) VALUES ({$userId},'{$review}',{$id},{$rating})";
+
+    mysqli_query($connection, $query);
+
+
+
+    calculateTotalRating();
+}
+function calculateTotalRating()
+{
+    global $connection, $id;
+
+    $totalratingsquery = "SELECT count(*) as totalrating from reviews where movieId = {$id}";
+
+    $queryresult = mysqli_query($connection, $totalratingsquery);
+
+    $totalratings = mysqli_fetch_assoc($queryresult);
+
+    // print_r($totalratings);
+
+    $sumRating = "SELECT SUM(rating) as rating from reviews where movieId = {$id}";
+
+    $sumResult = mysqli_query($connection, $sumRating);
+
+    $summed = mysqli_fetch_assoc($sumResult);
+
+    // print_r($summed);
+
+    $avgRating = $summed['rating'] / $totalratings['totalrating'];
+
+    // echo $avgRating;
+
+    $insertAvgMovieRating = "UPDATE movies set movieRating = {$avgRating} where movieId = {$id}";
+
+    mysqli_query($connection, $insertAvgMovieRating);
+
+    $movieTotalReviews = $totalratings['totalrating'];
+}
 
 ?>
+
+
 
 <!DOCTYPE html>
 <!--[if IE 7]>
@@ -44,7 +98,10 @@ if (isset($_GET['movieid'])) {
     <!-- CSS files -->
     <link rel="stylesheet" href="css/plugins.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+    <style>
 
+    </style>
 </head>
 
 <body>
@@ -159,20 +216,23 @@ if (isset($_GET['movieid'])) {
                             <div class="rate">
                                 <i class="ion-android-star"></i>
                                 <p><span><?php echo $data['movieRating'] ?></span> /10<br>
-                                    <span class="rv">56 Reviews</span>
+                                    <span class="rv"><?php echo $movieTotalReviews ?> Reviews</span>
                                 </p>
                             </div>
                             <div class="rate-star">
                                 <p>Rate This Movie: </p>
-                                <i class="ion-ios-star"></i>
-                                <i class="ion-ios-star"></i>
-                                <i class="ion-ios-star"></i>
-                                <i class="ion-ios-star"></i>
-                                <i class="ion-ios-star"></i>
-                                <i class="ion-ios-star"></i>
-                                <i class="ion-ios-star"></i>
-                                <i class="ion-ios-star"></i>
-                                <i class="ion-ios-star-outline"></i>
+
+                                <?php
+                                for ($i = 1; $i <= 10; $i++) {
+                                    if ($i <= $data['movieRating']) { ?>
+                                        <i class="ion-ios-star"></i>
+                                    <?php } else { ?>
+                                        <i class="ion-ios-star-outline"></i>
+                                <?php }
+                                }
+                                ?>
+                            
+                              
                             </div>
                         </div>
                         <div class="movie-tabs">
@@ -180,8 +240,8 @@ if (isset($_GET['movieid'])) {
                                 <ul class="tab-links tabs-mv">
                                     <li class="active"><a href="#overview">Overview</a></li>
                                     <li><a href="#reviews"> Reviews</a></li>
-                                    <li><a href="#cast"> Cast & Crew </a></li>
-                                    <li><a href="#media"> Media</a></li>
+                                    <!-- <li><a href="#cast"> Cast & Crew </a></li> -->
+                                    <!-- <li><a href="#media"> Media</a></li> -->
                                     <li><a href="#moviesrelated"> Related Movies</a></li>
                                 </ul>
                                 <div class="tab-content">
@@ -271,25 +331,40 @@ if (isset($_GET['movieid'])) {
                                                 </div> -->
                                                 <hr>
                                                 <!-- movie user review -->
-                                                <div class="mv-user-review-item">
-                                                    <h3>Best Marvel movie in my opinion</h3>
-                                                    <div class="no-star">
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star last"></i>
+                                                <?php
+                                                $spotlight = "SELECT * From users join 
+                                                    reviews on users.userId = reviews.userId 
+                                                    where rating = (SELECT MAX(RATING) from reviews) AND movieId = {$id}
+                                                    LIMIT 1 ";
+
+                                                $spotlightResult = mysqli_query($connection, $spotlight);
+
+                                                if (mysqli_num_rows($spotlightResult) > 0) {
+                                                    $spotlightreview = mysqli_fetch_assoc($spotlightResult);
+                                                ?>
+                                                    <div class="mv-user-review-item">
+                                                        <div class="user-infor">
+                                                            <div>
+                                                                <h3><?php echo $spotlightreview['userName'] ?></h3>
+                                                                <div class="no-star">
+                                                                    <?php
+                                                                    for ($i = 0; $i < $spotlightreview['rating']; $i++) { ?>
+                                                                        <i class="ion-android-star"></i>
+                                                                    <?php }
+                                                                    ?>
+                                                                </div>
+                                                                <p class="time">
+                                                                    <?php $date = date_create($spotlightreview['dt']);
+                                                                    echo date_format($date, "Y  M  d");
+                                                                    ?> By <a href="#"><?php echo $spotlightreview['userEmail']; ?> </a>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                        <p> <?php echo $spotlightreview['review']; ?></p>
                                                     </div>
-                                                    <p class="time">
-                                                        17 December 2016 by <a href="#"> hawaiipierson</a>
-                                                    </p>
-                                                    <p>This is by far one of my favorite movies from the MCU. The introduction of new Characters both good and bad also makes the movie more exciting. giving the characters more of a back story can also help audiences relate more to different characters better, and it connects a bond between the audience and actors or characters. Having seen the movie three times does not bother me here as it is as thrilling and exciting every time I am watching it. In other words, the movie is by far better than previous movies (and I do love everything Marvel), the plotting is splendid (they really do out do themselves in each film, there are no problems watching it more than once.</p>
-                                                </div>
+                                                <?php }
+                                                ?>
+
                                             </div>
                                             <div class="col-md-4 col-xs-12 col-sm-12">
                                                 <!-- <div class="sb-it">
@@ -336,6 +411,8 @@ if (isset($_GET['movieid'])) {
                                             </div>
                                         </div>
                                     </div>
+
+
                                     <div id="reviews" class="tab review">
                                         <div class="row">
                                             <div class="rv-hd">
@@ -343,10 +420,55 @@ if (isset($_GET['movieid'])) {
                                                     <h3>Related Movies To</h3>
                                                     <h2>Skyfall: Quantum of Spectre</h2>
                                                 </div>
-                                                <a href="#" class="redbtn <?php echo isset($_SESSION['userId']) ? 'reviewLink' : 'loginLink' ?>">Write Review</a>
+                                                <?php
+                                                if (isset($_SESSION['userId'])) { ?>
+                                                    <a href="#ex1" rel="modal:open" class="redbtn">Write Review</a>
+                                                <?php } else { ?>
+                                                    <button class="redbtn loginLink">Write Review</button>
+                                                <?php }
+                                                ?>
+
+                                            </div>
+
+                                            <div id="ex1" class="modal">
+                                                <form method="post" action="moviesingle.php?movieid=<?php echo $id; ?>" width="100%">
+                                                    <div class="row">
+                                                        <label for="username">
+                                                            Rating
+                                                            <select name="rating" class="reviewselect form-control">
+                                                                <option>1</option>
+                                                                <option>2</option>
+                                                                <option>3</option>
+                                                                <option>4</option>
+                                                                <option>5</option>
+                                                                <option>6</option>
+                                                                <option>7</option>
+                                                                <option>8</option>
+                                                                <option>9</option>
+                                                                <option>10</option>
+                                                            </select>
+                                                        </label>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <label for="review">
+                                                            Review:
+                                                            <textarea type="text" name="review" required="required">
+                                                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur voluptates esse debitis nostrum dignissimos? Facere ut asperiores exercitationem similique odio expedita sapiente harum aliquam architecto officia eveniet numquam delectus magnam dolores, nihil enim, ullam in recusandae possimus repellendus maiores excepturi?
+                                                            </textarea>
+                                                        </label>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <button type="submit" class="redbtn" name="reviewbtn">Submit</button>
+                                                    </div>
+                                                </form>
+
+
+
                                             </div>
                                             <div class="topbar-filter">
-                                                <p>Found <span>56 reviews</span> in total</p>
+                                                <p>Found <span><?php echo $movieTotalReviews; ?></span> in total</p>
                                                 <label>Filter by:</label>
                                                 <select>
                                                     <option value="popularity">Popularity Descending</option>
@@ -357,31 +479,40 @@ if (isset($_GET['movieid'])) {
                                                     <option value="date">Release date Ascending</option>
                                                 </select>
                                             </div>
-                                            <div class="mv-user-review-item">
-                                                <div class="user-infor">
-                                                    <img src="images/uploads/userava1.jpg" alt="">
-                                                    <div>
-                                                        <h3>Best Marvel movie in my opinion</h3>
-                                                        <div class="no-star">
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star last"></i>
+                                            <?php
+                                            $userReviews = "SELECT * FROM users JOIN reviews on users.userId = reviews.userId where reviews.movieId = {$id}";
+
+                                            $reviewsResult = mysqli_query($connection, $userReviews);
+                                            if (mysqli_num_rows($reviewsResult) > 0) {
+                                                while ($reviewData = mysqli_fetch_assoc($reviewsResult)) { ?>
+                                                    <div class="mv-user-review-item">
+                                                        <div class="user-infor">
+                                                            <div>
+                                                                <h3><?php echo $reviewData['userName'] ?></h3>
+                                                                <div class="no-star">
+                                                                    <?php
+                                                                    for ($i = 0; $i < $reviewData['rating']; $i++) { ?>
+                                                                        <i class="ion-android-star"></i>
+                                                                    <?php }
+                                                                    ?>
+                                                                </div>
+                                                                <p class="time">
+                                                                    <?php $date = date_create($reviewData['dt']);
+                                                                    echo date_format($date, "Y  M  d");
+                                                                    ?> By <a href="#"><?php echo $reviewData['userEmail']; ?> </a>
+                                                                </p>
+                                                            </div>
                                                         </div>
-                                                        <p class="time">
-                                                            17 December 2016 by <a href="#"> hawaiipierson</a>
-                                                        </p>
+                                                        <p> <?php echo $reviewData['review']; ?></p>
                                                     </div>
-                                                </div>
-                                                <p>This is by far one of my favorite movies from the MCU. The introduction of new Characters both good and bad also makes the movie more exciting. giving the characters more of a back story can also help audiences relate more to different characters better, and it connects a bond between the audience and actors or characters. Having seen the movie three times does not bother me here as it is as thrilling and exciting every time I am watching it. In other words, the movie is by far better than previous movies (and I do love everything Marvel), the plotting is splendid (they really do out do themselves in each film, there are no problems watching it more than once.</p>
-                                            </div>
-                                            <div class="mv-user-review-item">
+                                                <?php
+                                                }
+                                            } else { ?>
+                                                <p>BE THE FIRST ONE TO WRITE A REVIEW!.</p>
+                                            <?php }
+                                            ?>
+
+                                            <!-- <div class="mv-user-review-item">
                                                 <div class="user-infor">
                                                     <img src="images/uploads/userava2.jpg" alt="">
                                                     <div>
@@ -495,7 +626,8 @@ if (isset($_GET['movieid'])) {
                                                 <p>The Avengers raid a Hydra base in Sokovia commanded by Strucker and they retrieve Loki's scepter. They also discover that Strucker had been conducting experiments with the orphan twins Pietro Maximoff (Aaron Taylor-Johnson), who has super speed, and Wanda Maximoff (Elizabeth Olsen), who can control minds and project energy. Tony Stark (Robert Downey Jr.) discovers an Artificial Intelligence in the scepter and convinces Bruce Banner (Mark Ruffalo) to secretly help him to transfer the A.I. to his Ultron defense system. However, the Ultron understands that is necessary to annihilate mankind to save the planet, attacks the Avengers and flees to Sokovia with the scepter. He builds an armature for self-protection and robots for his army and teams up with the twins. The Avengers go to Clinton Barton's house to recover, but out of the blue, Nick Fury (Samuel L. Jackson) arrives and convinces them to fight against Ultron. Will they succeed? </p>
 
                                                 <p>"Avengers: Age of Ultron" is an entertaining adventure with impressive special effects and cast. The storyline might be better, since most of the characters do not show any chemistry. However, it is worthwhile watching this film since the amazing special effects are not possible to be described in words. Why Pietro has to die is also not possible to be explained. My vote is eight.</p>
-                                            </div>
+                                            </div> -->
+
                                             <div class="topbar-filter">
                                                 <label>Reviews per page:</label>
                                                 <select>
@@ -517,7 +649,7 @@ if (isset($_GET['movieid'])) {
                                     </div>
                                     <div id="cast" class="tab">
                                         <div class="row">
-                                            <h3>Cast & Crew of</h3>
+                                            <!-- <h3>Cast & Crew of</h3>
                                             <h2>Avengers: Age of Ultron</h2>
                                             <!-- //== -->
                                             <div class="title-hd-sm">
@@ -702,11 +834,11 @@ if (isset($_GET['movieid'])) {
                                                         <a href="#">Jeffrey Ford</a>
                                                     </div>
                                                     <p>... associate producer</p>
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </div>
                                     </div>
-                                    <div id="media" class="tab">
+                                    <!-- <div id="media" class="tab">
                                         <div class="row">
                                             <div class="rv-hd">
                                                 <div>
@@ -826,7 +958,7 @@ if (isset($_GET['movieid'])) {
                                                 <a class="img-lightbox" data-fancybox-group="gallery" href="images/uploads/image211.jpg"><img src="images/uploads/image2-1.jpg" alt=""></a>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div id="moviesrelated" class="tab">
                                         <div class="row">
                                             <h3>Related Movies To</h3>
@@ -991,6 +1123,7 @@ if (isset($_GET['movieid'])) {
     <script src="js/plugins.js"></script>
     <script src="js/plugins2.js"></script>
     <script src="js/custom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 
 </body>
 

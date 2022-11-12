@@ -2,8 +2,6 @@
 
 include 'connection.php';
 
-
-
 ?>
 
 <!DOCTYPE html>
@@ -50,9 +48,10 @@ include 'connection.php';
 
 	<!--end of login form popup-->
 	<!--signup form popup-->
-	<?php 
-		include 'loginform.php';
+	<?php
+	include 'loginform.php';
 	?>
+	
 	<div class="login-wrapper" id="signup-content">
 		<div class="login-content">
 			<a href="#" class="close">x</a>

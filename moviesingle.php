@@ -231,8 +231,8 @@ function calculateTotalRating()
                                 <?php }
                                 }
                                 ?>
-                            
-                              
+
+
                             </div>
                         </div>
                         <div class="movie-tabs">

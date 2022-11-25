@@ -118,7 +118,6 @@ include 'connection.php';
 					<?php
 					$movies = "SELECT * FROM movies order by movieId DESC";
 					$result = mysqli_query($connection, $movies);
-
 					if (mysqli_num_rows($result) > 0) {
 						while ($data = mysqli_fetch_assoc($result)) { ?>
 
@@ -175,7 +174,7 @@ include 'connection.php';
 														<img src="adminpanel/uploadedimgs/<?php echo $updata['movieImage']; ?>" alt="" width="185" height="284">
 													</div>
 													<div class="hvr-inner">
-														<a href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
+														<a href="moviesingle.php?movieid=<?php echo $updata['movieId']; ?>"> Read more <i class="ion-android-arrow-dropright"></i> </a>
 													</div>
 													<div class="title-in">
 														<h6><a href="#"><?php echo $updata['movieName']; ?></a></h6>
@@ -207,7 +206,7 @@ include 'connection.php';
 														<img src="adminpanel/uploadedimgs/<?php echo $updata['movieImage']; ?>" alt="" width="185" height="284">
 													</div>
 													<div class="hvr-inner">
-														<a href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
+														<a href="moviesingle.php?movieid=<?php echo $updata['movieId']; ?>"> Read more <i class="ion-android-arrow-dropright"></i> </a>
 													</div>
 													<div class="title-in">
 														<h6><a href="#"><?php echo $updata['movieName']; ?></a></h6>
@@ -216,11 +215,7 @@ include 'connection.php';
 												</div>
 											</div>
 										<?php	}
-
-
 										?>
-
-
 									</div>
 								</div>
 							</div>

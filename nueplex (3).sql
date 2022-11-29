@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 12, 2022 at 10:04 AM
+-- Generation Time: Nov 29, 2022 at 10:03 AM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 7.3.27
 
@@ -67,13 +67,13 @@ CREATE TABLE `movies` (
 
 INSERT INTO `movies` (`movieId`, `movieName`, `movieCat`, `movieRuntime`, `movieImage`, `movieDescription`, `movieStatus`, `movieRating`, `movieTrailer`) VALUES
 (3, 'Oblivion 2', 'Action/Adventure', 7440, '1966691347mv1.jpg', 'A court martial sends a veteran soldier to a distant planet, where he has to ... Everything New on Hulu in November. There&#39;s a whole lot to love about Hulu&#39;s ', 'Showing', NULL, 'https://www.youtube.com/embed/XmIIgE7eSak'),
-(4, 'Black Adam', 'Action/Adventure', 7440, '868194380blackadam.jpg', 'Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lipsum generator.', 'Showing', NULL, 'https://www.youtube.com/embed/EXeTwQWrcwY'),
-(5, 'The Dark Knight', 'Action/Adventure', 9120, '2142151293darknight.jpg', 'Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lipsum generator.', 'Showing', NULL, 'https://www.youtube.com/embed/LDG9bisJEaI'),
-(6, 'Man Of Steel', 'Action/Adventure', 9120, '333395070mos.jpg', 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis quos tempore voluptatibus.', 'Showing', NULL, 'https://www.youtube.com/embed/T6DJcgm3wNY '),
-(7, 'Avengers Endgame', 'Action/Adventure', 10800, '585074086avenger.jpg', 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis quos tempore voluptatibus.', 'Showing', NULL, 'https://www.youtube.com/embed/TcMBFSGVi1c'),
-(8, 'Interstellar', 'SciFi', 10800, '1778344385interstellar.jpg', 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis quos tempore voluptatibus.', 'Showing', 8, 'https://www.youtube.com/embed/zSWdZVtXT7E'),
-(9, 'John Wick 2', 'Action/Adventure', 7200, '1021955603john wick.jpg', 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis quos tempore voluptatibus.', 'Showing', NULL, ' https://www.youtube.com/embed/v=XGk2EfbD_Ps '),
-(10, 'Black Panther: Wakanda Forever', 'Action/Adventure', 7200, '1228562629wakandaforever.jpg', 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis quos tempore voluptatibus.', 'Upcoming', NULL, '  https://www.youtube.com/embed/_Z3QKkl1WyM  ');
+(4, 'Black Adam', 'Action/Adventure', 7440, '868194380blackadam.jpg', 'Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lipsum generator.', 'Removed', NULL, 'https://www.youtube.com/embed/EXeTwQWrcwY'),
+(5, 'The Dark Knight', 'Action/Adventure', 9120, '2142151293darknight.jpg', 'Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lipsum generator.', 'Removed', NULL, 'https://www.youtube.com/embed/LDG9bisJEaI'),
+(6, 'Man Of Steel', 'Action/Adventure', 9120, '333395070mos.jpg', 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis quos tempore voluptatibus.', 'Removed', NULL, 'https://www.youtube.com/embed/T6DJcgm3wNY '),
+(7, 'Avengers Endgame', 'Action/Adventure', 10800, '585074086avenger.jpg', 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis quos tempore voluptatibus.', 'Removed', NULL, 'https://www.youtube.com/embed/TcMBFSGVi1c'),
+(8, 'Interstellar', 'SciFi', 10800, '1778344385interstellar.jpg', 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis quos tempore voluptatibus.', 'Removed', 8, 'https://www.youtube.com/embed/zSWdZVtXT7E'),
+(9, 'John Wick 2', 'Action/Adventure', 7200, '1021955603john wick.jpg', 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis quos tempore voluptatibus.', 'Removed', NULL, ' https://www.youtube.com/embed/v=XGk2EfbD_Ps '),
+(10, 'Black Panther: Wakanda Forever', 'Action/Adventure', 7200, '1228562629wakandaforever.jpg', 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis quos tempore voluptatibus.', 'Removed', NULL, '  https://www.youtube.com/embed/_Z3QKkl1WyM  ');
 
 -- --------------------------------------------------------
 
@@ -88,17 +88,12 @@ CREATE TABLE `orders` (
   `seatsBooked` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `reservedseats`
+-- Dumping data for table `orders`
 --
 
-CREATE TABLE `reservedseats` (
-  `orderId` int(11) DEFAULT NULL,
-  `seatnumber` varchar(40) DEFAULT NULL,
-  `priceEach` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+INSERT INTO `orders` (`orderId`, `userId`, `showId`, `seatsBooked`) VALUES
+(1, 1, 6, 37);
 
 -- --------------------------------------------------------
 
@@ -131,6 +126,39 @@ INSERT INTO `reviews` (`reviewId`, `userId`, `review`, `ts`, `dt`, `movieId`, `r
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `seatreserve`
+--
+
+CREATE TABLE `seatreserve` (
+  `seats` varchar(40) DEFAULT NULL,
+  `userId` int(11) DEFAULT NULL,
+  `showId` int(11) DEFAULT NULL,
+  `price` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `seatreserve`
+--
+
+INSERT INTO `seatreserve` (`seats`, `userId`, `showId`, `price`) VALUES
+('A1', 1, 6, 1000),
+('C3', 1, 6, 1000),
+('B2', 1, 6, 1000),
+('A5', 1, 6, 1000),
+('B5', 1, 6, 1000),
+('C5', 1, 6, 1000),
+('A7', 1, 6, 1000),
+('B7', 1, 6, 1000),
+('C7', 1, 6, 1000),
+('A9', 1, 6, 1000),
+('B9', 1, 6, 1000),
+('C9', 1, 6, 1000),
+('B10', 1, 6, 1000),
+('C10', 1, 6, 1000);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `showtimes`
 --
 
@@ -150,7 +178,8 @@ INSERT INTO `showtimes` (`showId`, `movieId`, `cinemaId`, `showtimings`, `showDa
 (2, 4, 1, '22:29', '2022-11-05'),
 (3, 5, 3, '15:29', '2022-11-05'),
 (4, 6, 3, '17:40', '2022-11-16'),
-(5, 7, 2, '22:40', '2022-11-16');
+(5, 7, 2, '22:40', '2022-11-16'),
+(6, 3, 1, '17:52', '2022-11-29');
 
 -- --------------------------------------------------------
 
@@ -206,6 +235,13 @@ ALTER TABLE `reviews`
   ADD KEY `movieId` (`movieId`);
 
 --
+-- Indexes for table `seatreserve`
+--
+ALTER TABLE `seatreserve`
+  ADD KEY `userId` (`userId`),
+  ADD KEY `showId` (`showId`);
+
+--
 -- Indexes for table `showtimes`
 --
 ALTER TABLE `showtimes`
@@ -239,7 +275,7 @@ ALTER TABLE `movies`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `orderId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `orderId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `reviews`
@@ -251,7 +287,7 @@ ALTER TABLE `reviews`
 -- AUTO_INCREMENT for table `showtimes`
 --
 ALTER TABLE `showtimes`
-  MODIFY `showId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `showId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -276,6 +312,13 @@ ALTER TABLE `orders`
 ALTER TABLE `reviews`
   ADD CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`),
   ADD CONSTRAINT `reviews_ibfk_2` FOREIGN KEY (`movieId`) REFERENCES `movies` (`movieId`);
+
+--
+-- Constraints for table `seatreserve`
+--
+ALTER TABLE `seatreserve`
+  ADD CONSTRAINT `seatreserve_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`),
+  ADD CONSTRAINT `seatreserve_ibfk_2` FOREIGN KEY (`showId`) REFERENCES `showtimes` (`showId`);
 
 --
 -- Constraints for table `showtimes`

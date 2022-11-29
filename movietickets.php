@@ -52,6 +52,11 @@ if (!isset($_GET['userid']) || !isset($_GET['cinemaId']) || !isset($_GET['movieI
         <script>
             const reserved = <?php echo $reservedata; ?>
         </script>
+    <?php } else {
+    ?>
+        <script>
+            let reserved = [];
+        </script>
 <?php }
 }
 ?>
@@ -77,7 +82,7 @@ if (!isset($_GET['userid']) || !isset($_GET['cinemaId']) || !isset($_GET['movieI
             background: green;
         }
 
-        td.reserved{
+        td.reserved {
             background: blue;
             color: white;
         }
@@ -164,8 +169,11 @@ if (!isset($_GET['userid']) || !isset($_GET['cinemaId']) || !isset($_GET['movieI
                     <td class="seat">C10</td>
                 </tr>
             </table>
+            <div class="card-body text-center">
+                <div class="mb-2">Confirmation</div>
+                <button class="btn btn-primary" id="swal-2">Launch</button>
+            </div>
 
-            <button class="btn btn-primary">SELECT SEATS</button>
         </div>
     </main>
     <footer>
@@ -178,7 +186,9 @@ if (!isset($_GET['userid']) || !isset($_GET['cinemaId']) || !isset($_GET['movieI
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js" integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
+    <script src="adminpanel/assets/bundles/sweetalert/sweetalert.min.js"></script>
+    <!-- Page Specific JS File -->
+    <script src="adminpanel/assets/js/page/sweetalert.js"></script>
     <script>
         $(document).ready(function() {
 
@@ -200,17 +210,22 @@ if (!isset($_GET['userid']) || !isset($_GET['cinemaId']) || !isset($_GET['movieI
                         },
                         success: function(result) {
                             console.log(result)
-                        }
+                            setTimeout(() => {
 
+                                window.location.replace("shows.php")
+                            }, 2000)
+                        }
                     })
                 })
             })
 
-            if (reserved.length > 0) {
+            if (typeof reserved !== 'undefined') {
                 reservedseats = []
                 reserved.forEach(function(i) {
-                    reservedseats.push(i[1])
+                    reservedseats.push(i[0])
                 })
+
+                console.log(reservedseats)
 
                 $('.seat').map(function() {
                     for (i = 0; i < reservedseats.length; i++) {

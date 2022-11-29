@@ -52,12 +52,18 @@ function success()
                             Home <i class="fa fa-angle-down" aria-hidden="true"></i>
                         </a>
                         <ul class="dropdown-menu level1">
-                            <li><a href="index-2.html">Home 01</a></li>
-                            <li><a href="homev2.html">Home 02</a></li>
-                            <li><a href="homev3.html">Home 03</a></li>
+                            <li><a href="index.php">Home</a></li>
                         </ul>
                     </li>
                     <li class="dropdown first">
+                        <a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown">
+                            ShowTimings <i class="fa fa-angle-down" aria-hidden="true"></i>
+                        </a>
+                        <ul class="dropdown-menu level1">
+                            <li><a href="shows.php">Shows</a></li>
+                        </ul>
+                    </li>
+                    <!-- <li class="dropdown first">
                         <a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">
                             movies<i class="fa fa-angle-down" aria-hidden="true"></i>
                         </a>
@@ -94,8 +100,8 @@ function success()
                             <li><a href="bloggrid.html">blog Grid</a></li>
                             <li class="it-last"><a href="blogdetail.html">blog Detail</a></li>
                         </ul>
-                    </li>
-                    <li class="dropdown first">
+                    </li> -->
+                    <!-- <li class="dropdown first">
                         <a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">
                             community <i class="fa fa-angle-down" aria-hidden="true"></i>
                         </a>
@@ -105,42 +111,19 @@ function success()
                             <li><a href="userprofile.html">user profile</a></li>
                             <li class="it-last"><a href="userrate.html">user rate</a></li>
                         </ul>
-                    </li>
+                    </li> -->
                 </ul>
                 <?php
                 if (isset($_SESSION['userId'])) { ?>
                     <ul class="nav navbar-nav flex-child-menu menu-right">
-                        <li class="dropdown first">
-                            <a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">
-                                pages <i class="fa fa-angle-down" aria-hidden="true"></i>
-                            </a>
-                            <ul class="dropdown-menu level1">
-                                <li><a href="landing.html">Landing</a></li>
-                                <li><a href="404.html">404 Page</a></li>
-                                <li class="it-last"><a href="comingsoon.html">Coming soon</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#">Help</a></li>
+
                         <li class=""><a href="<?php echo ($_SESSION['userRole'] == 'admin') ? "adminpanel/index.php" : "#"; ?>">Dashboard</a></li>
                         <li class=""><a href="logout.php">Logout</a></li>
                     </ul>
                 <?php } else { ?>
 
-
-                    <ul class="nav navbar-nav flex-child-menu menu-right">
-                        <li class="dropdown first">
-                            <a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">
-                                pages <i class="fa fa-angle-down" aria-hidden="true"></i>
-                            </a>
-                            <ul class="dropdown-menu level1">
-                                <li><a href="landing.html">Landing</a></li>
-                                <li><a href="404.html">404 Page</a></li>
-                                <li class="it-last"><a href="comingsoon.html">Coming soon</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#">Help</a></li>
-                        <li class="loginLink"><a href="#">LOG In</a></li>
-                        <li class="btn signupLink"><a href="#">sign up</a></li>
+                    <li class="loginLink"><a href="#">LOG In</a></li>
+                    <li class="btn signupLink"><a href="#">sign up</a></li>
                     </ul>
 
                 <?php }
@@ -150,12 +133,6 @@ function success()
         </nav>
 
         <!-- top search form -->
-        <div class="top-search">
-            <select>
-                <option value="united">TV show</option>
-                <option value="saab">Others</option>
-            </select>
-            <input type="text" placeholder="Search for a movie, TV Show or celebrity that you are looking for">
-        </div>
+
     </div>
 </header>

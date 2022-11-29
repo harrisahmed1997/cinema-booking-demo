@@ -156,7 +156,7 @@ if ($_SESSION["userRole"] != 'admin') {
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
-            <a href="index.php"> <img alt="image" src="assets/img/logo.png" class="header-logo" /> <span class="logo-name">Otika</span>
+            <a href="index.php"> <img alt="image" src="assets/img/logo.png" class="header-logo" /> <span class="logo-name">ADMIN PANEL</span>
             </a>
         </div>
         <ul class="sidebar-menu">
@@ -173,6 +173,12 @@ if ($_SESSION["userRole"] != 'admin') {
             </li>
             <li class="dropdown">
                 <a href="adminshowtimes.php" class="nav-link"><i data-feather="monitor"></i><span>View/Edit Shows</span></a>
+            </li>
+            <li class="dropdown">
+                <a href="adminallusers.php" class="nav-link"><i data-feather="monitor"></i><span>All Users</span></a>
+            </li>
+            <li class="dropdown">
+                <a href="adminbookings.php" class="nav-link"><i data-feather="monitor"></i><span>Bookings</span></a>
             </li>
             <li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="briefcase"></i><span>Widgets</span></a>

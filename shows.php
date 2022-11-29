@@ -112,38 +112,44 @@ include 'connection.php';
                 <div class="row">
                     <?php
                     $showtimes = "SELECT * FROM showtimes JOIN movies ON showtimes.movieId = movies.movieId
-                        JOIN cinemas on cinemas.cinemaId = showtimes.cinemaId";
+                        JOIN cinemas on cinemas.cinemaId = showtimes.cinemaId where movieStatus = 'Showing'";
 
                     $result = mysqli_query($connection, $showtimes);
-
                     if (mysqli_num_rows($result) > 0) {
-                        while ($data = mysqli_fetch_assoc($result)) { ?>
-                            <div class="col-md-4 p-2" style="margin-top:10px ;">
-                                <div class="image">
-                                    <img src="adminpanel/uploadedimgs/<?php echo $data['movieImage'] ?>" alt="" height="100">
+                        while ($data = mysqli_fetch_assoc($result)) {
+                            if ($data['showDate'] == date('Y-m-d')) { ?>
+                                <div class="col-md-4 p-2" style="margin-top:10px ;">
+                                    <div class="image">
+                                        <a href="moviesingle.php?movieid=<?php echo $data['movieId']; ?>">
+                                            <img src="adminpanel/uploadedimgs/<?php echo $data['movieImage'] ?>" alt="" height="100">
+                                        </a>
+                                    </div>
+                                    <h3 style="color: white;"><?php echo $data['movieName'] ?></h3>
+                                    <h2 style="color: white;">CINEMA <span style="color: red ;"><?php echo $data['cinemaType'] ?></span></h2>
+                                    <h2 style="color: white;"><?php echo $data['price'] ?> RPS </h2>
+                                    <p>Date : <?php echo $data['showDate'] ?></p>
+                                    <p>Timings : <?php echo $data['showtimings'] ?></p>
+                                    <p style="background-color: blue ; color:yellow; padding:2px 5px; font-family:'Courier New', Courier, monospace; font-size:16px;">
+                                        <?php
+                                        if (isset($_SESSION['userId'])) { ?>
+                                            <a href="movietickets.php?userid=<?php echo $_SESSION['userId']; ?>&movieId=<?php echo $data['movieId']; ?>&cinemaId=<?php echo $data['cinemaId']; ?>&showId=<?php echo $data['showId'] ?>">Get Tickets</a>
+                                        <?php } else { ?>
+                                            <li class="loginLink" style="background-color:blue; list-style:none;"><a href="#" style="color:white; padding:7px;">LOGIN TO GET TICKETS</a></li>
+
+                                        <?php }
+                                        ?>
+                                    </p>
+
                                 </div>
-                                <h3 style="color: white;"><?php echo $data['movieName'] ?></h3>
-                                <h2 style="color: white;">CINEMA <span style="color: red ;"><?php echo $data['cinemaType'] ?></span></h2>
-                                <h2 style="color: white;"><?php echo $data['price'] ?> RPS </h2>
-                                <p>Date : <?php echo $data['showDate'] ?></p>
-                                <p>Timings : <?php echo $data['showtimings'] ?></p>
-                                <p style="background-color: blue ; color:yellow; padding:2px 5px; font-family:'Courier New', Courier, monospace; font-size:16px;">
-                                    <?php
-                                    if (isset($_SESSION['userId'])) { ?>
-                                        <a href="movietickets.php?userid=<?php echo $_SESSION['userId']; ?>&movieId=<?php echo $data['movieId']; ?>&cinemaId=<?php echo $data['cinemaId']; ?>&showId=<?php echo $data['showId'] ?>">Get Tickets</a>
-                                    <?php } else { ?>
-                                        <li class="loginLink" style="background-color:blue; list-style:none;"><a href="#" style="color:white; padding:7px;">LOGIN TO GET TICKETS</a></li>
-                                    <?php }
-                                    ?>
-
-
-                                </p>
-
-                            </div>
-                    <?php  }
+                    <?php } else {
+                                mysqli_query($connection, "UPDATE movies set movieStatus = 'Removed' where movieId = {$data['movieId']}");
+                            }
+                        }
                     }
-
                     ?>
+
+
+
                 </div>
             </div>
         </div>

@@ -189,8 +189,8 @@ function calculateTotalRating()
                                 <div><a href="<?php echo $data['movieTrailer']; ?>" class="item item-2 redbtn fancybox-media hvr-grow"><i class="ion-play"></i></a></div>
                             </div>
                             <div class="btn-transform transform-vertical">
-                                <div><a href="#" class="item item-1 yellowbtn"> <i class="ion-card"></i> Buy ticket</a></div>
-                                <div><a href="#" class="item item-2 yellowbtn"><i class="ion-card"></i></a></div>
+                                <div><a href="shows.php" class="item item-1 yellowbtn"> <i class="ion-card"></i> Buy ticket</a></div>
+                                <div><a href="shows.php" class="item item-2 yellowbtn"><i class="ion-card"></i></a></div>
                             </div>
                         </div>
                     </div>
@@ -242,7 +242,7 @@ function calculateTotalRating()
                                     <li><a href="#reviews"> Reviews</a></li>
                                     <!-- <li><a href="#cast"> Cast & Crew </a></li> -->
                                     <!-- <li><a href="#media"> Media</a></li> -->
-                                    <li><a href="#moviesrelated"> Related Movies</a></li>
+                                    <!-- <li><a href="#moviesrelated"> Related Movies</a></li> -->
                                 </ul>
                                 <div class="tab-content">
                                     <div id="overview" class="tab active">
@@ -417,8 +417,8 @@ function calculateTotalRating()
                                         <div class="row">
                                             <div class="rv-hd">
                                                 <div class="div">
-                                                    <h3>Related Movies To</h3>
-                                                    <h2>Skyfall: Quantum of Spectre</h2>
+                                                    <h3>Reviews Related To</h3>
+                                                    <h2><?php echo $data['movieName'] ?></h2>
                                                 </div>
                                                 <?php
                                                 if (isset($_SESSION['userId'])) { ?>
@@ -469,15 +469,6 @@ function calculateTotalRating()
                                             </div>
                                             <div class="topbar-filter">
                                                 <p>Found <span><?php echo $movieTotalReviews; ?></span> in total</p>
-                                                <label>Filter by:</label>
-                                                <select>
-                                                    <option value="popularity">Popularity Descending</option>
-                                                    <option value="popularity">Popularity Ascending</option>
-                                                    <option value="rating">Rating Descending</option>
-                                                    <option value="rating">Rating Ascending</option>
-                                                    <option value="date">Release date Descending</option>
-                                                    <option value="date">Release date Ascending</option>
-                                                </select>
                                             </div>
                                             <?php
                                             $userReviews = "SELECT * FROM users JOIN reviews on users.userId = reviews.userId where reviews.movieId = {$id}";
@@ -628,23 +619,7 @@ function calculateTotalRating()
                                                 <p>"Avengers: Age of Ultron" is an entertaining adventure with impressive special effects and cast. The storyline might be better, since most of the characters do not show any chemistry. However, it is worthwhile watching this film since the amazing special effects are not possible to be described in words. Why Pietro has to die is also not possible to be explained. My vote is eight.</p>
                                             </div> -->
 
-                                            <div class="topbar-filter">
-                                                <label>Reviews per page:</label>
-                                                <select>
-                                                    <option value="range">5 Reviews</option>
-                                                    <option value="saab">10 Reviews</option>
-                                                </select>
-                                                <div class="pagination2">
-                                                    <span>Page 1 of 6:</span>
-                                                    <a class="active" href="#">1</a>
-                                                    <a href="#">2</a>
-                                                    <a href="#">3</a>
-                                                    <a href="#">4</a>
-                                                    <a href="#">5</a>
-                                                    <a href="#">6</a>
-                                                    <a href="#"><i class="ion-arrow-right-b"></i></a>
-                                                </div>
-                                            </div>
+
                                         </div>
                                     </div>
                                     <div id="cast" class="tab">
@@ -959,7 +934,7 @@ function calculateTotalRating()
                                             </div>
                                         </div>
                                     </div> -->
-                                    <div id="moviesrelated" class="tab">
+                                    <!-- <div id="moviesrelated" class="tab">
                                         <div class="row">
                                             <h3>Related Movies To</h3>
                                             <h2>Skyfall: Quantum of Spectre</h2>
@@ -1044,7 +1019,7 @@ function calculateTotalRating()
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>

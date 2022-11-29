@@ -82,8 +82,8 @@
                                                 </select>
                                             </div>
                                             <div class="form-group">
-                                                <label>Date</label>
-                                                <input type="date" class="form-control date" name="date">
+                                                <label>For The Date</label>
+                                                <input type="date" id="datePicker" class="form-control date" name="date" readonly>
                                             </div>
                                             <div class="form-group">
                                                 <label>Show Time</label>
@@ -213,7 +213,7 @@
     <!-- Custom JS File -->
     <script src="assets/js/custom.js"></script>
     <!-- Jquery CDN LINK  -->
-  
+
     <script>
         $(document).ready(function() {
             $('.submitbtn').click(function() {
@@ -225,18 +225,19 @@
                 $.ajax({
                     url: "insertshow.php",
                     type: "POST",
-                    data: {
+                data: {
                         showdate: showdate,
                         showtime: showtime,
                         showing: showing,
                         selected: selected
                     },
                     success: function(result) {
-                        console.log(result);
+                        alert(result);
                     }
                 })
             })
         })
+        document.getElementById('datePicker').valueAsDate = new Date()
     </script>
 </body>
 

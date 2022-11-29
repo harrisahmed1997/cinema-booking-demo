@@ -6,9 +6,16 @@
     $showid = $_POST['showid'];
     $price = $_POST['price'];
 
-    $query = "INSERT INTO seatreserve (userId,seatno,showId,price) VALUES ({$userid},'{$seats}',{$showid},{$price})";
+    $query = "INSERT INTO seatreserve (seats,userId,showId,price) VALUES ('{$seats}',{$userid},{$showid},{$price})";
+    mysqli_query($connection,$query);   
 
-    mysqli_query($connection,$query);
+    $maxseats = "SELECT COUNT(seats) from seatreserve where userId = {$userid}";
 
-    echo "done"
+    $maxseatsresult = mysqli_fetch_assoc(mysqli_query($connection,$maxseats));
+
+    $makeorder = "INSERT INTO orders (userId,showId,seatsBooked) VALUES ({$userid},{$showid},{$maxseatsresult['COUNT(seats)']})";
+
+    mysqli_query($connection,$makeorder);
+
+   
 ?>

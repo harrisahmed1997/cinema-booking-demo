@@ -61,7 +61,7 @@
                                 <div class="card">
                                     <div class="card-header">
 
-                                        <h4>HTML5 Form Basic</h4>
+                                        <h4>Add A Movie</h4>
                                     </div>
                                     <div class="card-body">
                                         <form action="addmovie.php" method="post" enctype="multipart/form-data">

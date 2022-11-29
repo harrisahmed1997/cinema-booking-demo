@@ -26,7 +26,8 @@ SET time_zone = "+00:00";
 --
 -- Table structure for table `cinemas`
 --
-
+create table nueplex;
+use nueplex;
 CREATE TABLE `cinemas` (
   `cinemaId` int(11) NOT NULL,
   `cinemaType` varchar(40) DEFAULT NULL,
